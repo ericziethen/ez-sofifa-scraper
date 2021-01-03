@@ -10,6 +10,7 @@ on:
     - feature/setup-basic-workflow
 
 jobs:
+  scrape:
     name: Scrape Sofifa Data
     runs-on: "ubuntu-latest"
 
