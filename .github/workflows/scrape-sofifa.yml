@@ -65,7 +65,7 @@ jobs:
 
       - name: Scrape Leagues
         run: |
-          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}'"'"
+          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
           ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}'"
 
       - name: Zip artifact
