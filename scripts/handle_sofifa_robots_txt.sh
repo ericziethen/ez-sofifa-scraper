@@ -2,8 +2,6 @@
 
 echo '##### Calling: '`basename "$0"` '('$0')'
 
-SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
 ### Verify the parsed variables
 dest_dir=$1
 
@@ -22,11 +20,13 @@ fi
 ### Get the Robots File
 robots_url=https://sofifa.com/robots.txt
 
-echo "Command: ''"
-${SCRIPT_PATH}/download_file.sh "${robots_url}" "${dest_dir}" "robots.txt"
+file_path=${dest_dir}/robots.txt
+
+echo "Command: 'curl --fail -L -o "${file_path}" "${robots_url}"'"
+curl --fail -L -o "${file_path}" "${robots_url}"
 return_code=$?
-if [[ ${return_code} -ne  0 ]];
+if [[ $return_code -ne  0 ]];
 then
     echo "*** Some Issues Found downloading the file"
-    exit ${return_code}
+    exit 1
 fi
