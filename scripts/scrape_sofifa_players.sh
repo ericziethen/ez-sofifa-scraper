@@ -93,7 +93,8 @@ parameter_list+=("wg")          # Wage
 parameter_list+=("wi")          # Weight
 parameter_list+=("wk")          # Weak Foot
 
-base_url="https://sofifa.com/players?currency=EUR&units=mks"
+# Need to specify the id, otherwise it finds only few pages
+base_url="https://sofifa.com/players?col=pi&sort=asc&currency=EUR&units=mks"
 full_url=${base_url}
 param_url_pre_count="showCol%5B"
 param_url_post_count="%5D"
