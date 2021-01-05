@@ -24,6 +24,7 @@ jobs:
       - name: Setup Environment
         # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
         run: |
+          echo "WORK_DIR=${{ github.workspace }}" >> $GITHUB_ENV
           echo "DATA_DIR=${{ github.workspace }}/data" >> $GITHUB_ENV
           echo "HTML_DIR=${{ github.workspace }}/data/html" >> $GITHUB_ENV
           echo "PLAYERS_DIR=${{ github.workspace }}/data/html/Players" >> $GITHUB_ENV
@@ -57,28 +58,30 @@ jobs:
           echo "Command: './scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"'"
           ./scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"
 
-      - name: Scrape Leagues
-        run: |
-          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
-          ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"
-
-      - name: Scrape Teams
-        run: |
-          echo "Command: './scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"'"
-          ./scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"
-
-      # - name: Scrape Squads
+      # - name: Scrape Leagues
       #   run: |
+      #     echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
+      #     ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"
+
+      # - name: Scrape Teams
+      #   run: |
+      #     echo "Command: './scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"'"
+      #     ./scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"
+
+      # # - name: Scrape Squads
+      # #   run: |
 
 
-      - name: Scrape Players
-        run: |
-          echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"
-          ./scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"
+      # - name: Scrape Players
+      #   run: |
+      #     echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"
+      #     ./scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"
 
       - name: Zip artifact
         run: |
+          pushd "${WORK_DIR}"
           zip -r sofifa_data ${DATA_DIR}
+          popd
 
       - name: Create Release
         id: create_release
