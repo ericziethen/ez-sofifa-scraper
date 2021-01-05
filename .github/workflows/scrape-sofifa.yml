@@ -24,6 +24,7 @@ jobs:
       - name: Setup Environment
         # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
         run: |
+          echo "WORK_DIR=${{ github.workspace }}" >> $GITHUB_ENV
           echo "DATA_DIR=${{ github.workspace }}/data" >> $GITHUB_ENV
           echo "HTML_DIR=${{ github.workspace }}/data/html" >> $GITHUB_ENV
           echo "PLAYERS_DIR=${{ github.workspace }}/data/html/Players" >> $GITHUB_ENV
@@ -79,7 +80,7 @@ jobs:
       - name: Zip artifact
         run: |
           pushd "${DATA_DIR}"
-          zip -r sofifa_data .
+          zip -r ${WORK_DIR}/sofifa_data.zip .
           popd
 
       - name: Create Release
