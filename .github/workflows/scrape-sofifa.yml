@@ -80,7 +80,7 @@ jobs:
       - name: Zip artifact
         run: |
           pushd "${WORK_DIR}"
-          zip -r sofifa_data ${DATA_DIR}
+          zip -r sofifa_data .
           popd
 
       - name: Create Release
