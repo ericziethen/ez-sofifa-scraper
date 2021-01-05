@@ -47,7 +47,7 @@ parameter_list+=("ta")          # Whole Team Average Age
 parameter_list+=("tb")          # Transfer Budget
 parameter_list+=("ti")          # ID
 
-base_url="https://sofifa.com/teams/?col=ti&sort=asc"
+base_url="https://sofifa.com/teams/?currency=EUR&units=mks"
 full_url=${base_url}
 param_url_pre_count="showCol%5B"
 param_url_post_count="%5D="
@@ -59,9 +59,6 @@ for param in ${parameter_list[@]}; do
 
     param_count=`expr ${param_count} + 1`  # Backticks - see http://alvinalexander.com/linux-unix/linux-shell-script-counter-math-addition-loop/
 done
-
-# Set Currency to Euro and metrics units
-full_url="${full_url}&currency=EUR&units=mks"
 
 echo ${full_url}
 
