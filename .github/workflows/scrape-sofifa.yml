@@ -57,20 +57,24 @@ jobs:
           echo "Command: './scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"'"
           ./scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"
 
-      - name: Scrape Players
+      - name: Scrape Leagues
         run: |
-          echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"
-          ./scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"
+          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
+          ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"
 
       - name: Scrape Teams
         run: |
           echo "Command: './scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"'"
           ./scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"
 
-      - name: Scrape Leagues
+      # - name: Scrape Squads
+      #   run: |
+
+
+      - name: Scrape Players
         run: |
-          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
-          ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"
+          echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"
+          ./scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"
 
       - name: Zip artifact
         run: |
