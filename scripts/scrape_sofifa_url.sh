@@ -88,6 +88,8 @@ while true; do
         break
     fi
 
+    echo "'${file_path}'        ->      '${full_url}'"     >> "${dest_dir}/SCRAPED_URLS.TXT"
+
     # Sleep before next try
     echo "Command: 'sleep 5'"
     sleep 5

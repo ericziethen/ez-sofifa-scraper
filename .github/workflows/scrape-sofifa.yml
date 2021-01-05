@@ -71,7 +71,6 @@ jobs:
       # - name: Scrape Squads
       #   run: |
 
-
       - name: Scrape Players
         run: |
           echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"

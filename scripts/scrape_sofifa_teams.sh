@@ -47,15 +47,15 @@ parameter_list+=("ta")          # Whole Team Average Age
 parameter_list+=("tb")          # Transfer Budget
 parameter_list+=("ti")          # ID
 
-base_url="https://sofifa.com/teams/?currency=EUR&units=mks"
+base_url="https://sofifa.com/teams?currency=EUR&units=mks"
 full_url=${base_url}
 param_url_pre_count="showCol%5B"
-param_url_post_count="%5D="
+param_url_post_count="%5D"
 param_count=0
 
 for param in ${parameter_list[@]}; do
     #echo "Param Count: ${param_count} for param '${param}'"
-    full_url="${full_url}&${param_url_pre_count}${param_count}${param_url_post_count}${param}"
+    full_url="${full_url}&${param_url_pre_count}${param_count}${param_url_post_count}=${param}"
 
     param_count=`expr ${param_count} + 1`  # Backticks - see http://alvinalexander.com/linux-unix/linux-shell-script-counter-math-addition-loop/
 done
