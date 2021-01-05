@@ -25,19 +25,23 @@ jobs:
         # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
         run: |
           echo "DATA_DIR=${{ github.workspace }}/data" >> $GITHUB_ENV
-          echo "PLAYERS_DIR=${{ github.workspace }}/data/Players" >> $GITHUB_ENV
-          echo "TEAMS_DIR=${{ github.workspace }}/data/Teams" >> $GITHUB_ENV
-          echo "LEAGUES_DIR=${{ github.workspace }}/data/Leagues" >> $GITHUB_ENV
+          echo "HTML_DIR=${{ github.workspace }}/data/html" >> $GITHUB_ENV
+          echo "PLAYERS_DIR=${{ github.workspace }}/data/html/Players" >> $GITHUB_ENV
+          echo "TEAMS_DIR=${{ github.workspace }}/data/html/Teams" >> $GITHUB_ENV
+          echo "LEAGUES_DIR=${{ github.workspace }}/data/html/Leagues" >> $GITHUB_ENV
 
       - name: Setup Dirs
         run: |
           echo "DATA_DIR: '${DATA_DIR}'"
+          echo "HTML_DIR: '${HTML_DIR}'"
           echo "PLAYERS_DIR: '${PLAYERS_DIR}'"
           echo "TEAMS_DIR: '${TEAMS_DIR}'"
           echo "LEAGUES_DIR: '${LEAGUES_DIR}'"
 
           echo "Command: 'mkdir -p ${DATA_DIR}'"
           mkdir -p ${DATA_DIR}
+          echo "Command: 'mkdir -p ${HTML_DIR}'"
+          mkdir -p ${HTML_DIR}
           echo "Command: 'mkdir -p ${PLAYERS_DIR}'"
           mkdir -p ${PLAYERS_DIR}
           echo "Command: 'mkdir -p ${TEAMS_DIR}'"
@@ -50,8 +54,8 @@ jobs:
 
       - name: Get Robots.txt
         run: |
-          echo "Command: './scripts/handle_sofifa_robots_txt.sh "${DATA_DIR}"'"
-          ./scripts/handle_sofifa_robots_txt.sh "${DATA_DIR}"
+          echo "Command: './scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"'"
+          ./scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"
 
       - name: Scrape Players
         run: |

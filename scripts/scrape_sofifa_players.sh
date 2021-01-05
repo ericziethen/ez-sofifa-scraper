@@ -93,7 +93,7 @@ parameter_list+=("wg")          # Wage
 parameter_list+=("wi")          # Weight
 parameter_list+=("wk")          # Weak Foot
 
-base_url="https://sofifa.com/?col=pi&sort=desc"
+base_url="https://sofifa.com/?col=pi&sort=asc"
 full_url=${base_url}
 param_url_pre_count="showCol%5B"
 param_url_post_count="%5D="
@@ -108,7 +108,6 @@ done
 
 # Set Currency to Euro and metrics units
 full_url="${full_url}&currency=EUR&units=mks"
-
 
 ./scripts/scrape_sofifa_url.sh "${full_url}" 60 "PLAYERS" "${dest_dir}"
 
