@@ -30,6 +30,8 @@ jobs:
           echo "PLAYERS_DIR=${{ github.workspace }}/data/html/Players" >> $GITHUB_ENV
           echo "TEAMS_DIR=${{ github.workspace }}/data/html/Teams" >> $GITHUB_ENV
           echo "LEAGUES_DIR=${{ github.workspace }}/data/html/Leagues" >> $GITHUB_ENV
+          echo "SQUADS_DIR=${{ github.workspace }}/data/html/Squads" >> $GITHUB_ENV
+          
 
       - name: Setup Dirs
         run: |
@@ -38,6 +40,7 @@ jobs:
           echo "PLAYERS_DIR: '${PLAYERS_DIR}'"
           echo "TEAMS_DIR: '${TEAMS_DIR}'"
           echo "LEAGUES_DIR: '${LEAGUES_DIR}'"
+          echo "LEAGUES_DIR: '${SQUADS_DIR}'"
 
           echo "Command: 'mkdir -p ${DATA_DIR}'"
           mkdir -p ${DATA_DIR}
@@ -49,6 +52,8 @@ jobs:
           mkdir -p ${TEAMS_DIR}
           echo "Command: 'mkdir -p ${LEAGUES_DIR}'"
           mkdir -p ${LEAGUES_DIR}
+          echo "Command: 'mkdir -p ${SQUADS_DIR}'"
+          mkdir -p ${SQUADS_DIR}
 
           echo "Command: 'ls -altR ${DATA_DIR}'"
           ls -altR ${DATA_DIR}
@@ -58,18 +63,16 @@ jobs:
           echo "Command: './scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"'"
           ./scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"
 
-      - name: Scrape Leagues
-        run: |
-          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
-          ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"
-
-      - name: Scrape Teams
+      - name: Scrape Teams, Leagues and Squads
         run: |
           echo "Command: './scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"'"
           ./scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"
 
-      # - name: Scrape Squads
-      #   run: |
+          echo "Command: './scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"'"
+          ./scripts/scrape_sofifa_leagues.sh "${LEAGUES_DIR}"
+
+          echo "Command: './scripts/scrape_sofifa_squads.sh "${SQUADS_DIR}"'"
+          ./scripts/scrape_sofifa_squads.sh "${SQUADS_DIR}"
 
       - name: Scrape Players
         run: |
