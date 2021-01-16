@@ -1,16 +1,15 @@
 
-
-PLAYER_1_ROW = """
+PLAYER_1_ROW_STR = """
 <tr>
     <td class="col-avatar">
         <figure class="avatar">
-            <img alt="" data-src="https://cdn.sofifa.com/players/001/179/21_60.png" data-srcset="https://cdn.sofifa.com/players/001/179/21_120.png 2x, https://cdn.sofifa.com/players/001/179/21_180.png 3x" src="https://cdn.sofifa.com/players/notfound_0_60.png" data-root="https://cdn.sofifa.com/players/" data-type="player" id="1179" class="player-check"/>
+            <img alt="" data-src="https://cdn.sofifa.com/players/001/179/21_60.png" data-srcset="https://cdn.sofifa.com/players/001/179/21_120.png 2x, https://cdn.sofifa.com/players/001/179/21_180.png 3x" src="https://cdn.sofifa.com/players/notfound_0_60.png" data-root="https://cdn.sofifa.com/players/" data-type="player" id="1179" class="player-check">
         </figure>
     </td>
     <td class="col-name">
         <a class="tooltip" href="/player/1179/gianluigi-buffon/210019/" data-tooltip="Gianluigi Buffon">
             <div class="bp3-text-overflow-ellipsis">
-                <img title="Italy" alt="" src="" data-src="https://cdn.sofifa.com/flags/it.png" data-srcset="https://cdn.sofifa.com/flags/it@2x.png 2x, https://cdn.sofifa.com/flags/it@3x.png 3x" class="flag"> G. Buffon</img>
+                <img title="Italy" alt="" src="" data-src="https://cdn.sofifa.com/flags/it.png" data-srcset="https://cdn.sofifa.com/flags/it@2x.png 2x, https://cdn.sofifa.com/flags/it@3x.png 3x" class="flag"> G. Buffon
             </div>
         </a>
         <a rel="nofollow" href="/players?pn=0">
@@ -28,7 +27,6 @@ PLAYER_1_ROW = """
         <div class="bp3-text-overflow-ellipsis">
             <figure class="avatar avatar-sm transparent">
                 <img alt="" class="team" data-src="https://cdn.sofifa.com/teams/45/30.png" data-srcset="https://cdn.sofifa.com/teams/45/60.png 2x, https://cdn.sofifa.com/teams/45/90.png 3x" src="https://cdn.sofifa.com/teams/notfound_30.png" data-root="https://cdn.sofifa.com/teams/" data-type="team">
-                </img>
             </figure>
             <a href="/team/45/juventus/">Juventus</a>
             <div class="sub">

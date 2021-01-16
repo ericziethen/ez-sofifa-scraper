@@ -5,25 +5,50 @@ import re
 
 from bs4 import BeautifulSoup
 
+from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
 
-PLAYER_FIELDS = {
-    'pi': { 'json_key_name': 'id' },
-    'ae': { 'json_key_name': 'Age' },
-}
+# PLAYER_FIELDS = {
+#     'pi':{ 'json_key_name': 'id' },
+#     'ae':{ 'json_key_name': 'Age' },
+# }
 
 
 
 def parse_player_row(player_row):
     player_dict = {}
 
+    # Image Sources
+    image_tag = player_row.find('img', {'class': 'player-check'})
+    player_dict['image_url'] = image_tag.get('data-src')
+    player_dict['image_url_2x'] = image_tag.get('data-srcset').split(' ')[0]
+    player_dict['image_url_3x'] = image_tag.get('data-srcset').split(' ')[2]
+
+    # Tooltip info
+    tooltip_tag = player_row.find('a', {'class': 'tooltip'})
+    player_dict['detail_url'] = tooltip_tag.get('href')
+    player_dict['full_name'] = tooltip_tag.get('data-tooltip')
+    player_dict['short_name'] = tooltip_tag.find('div').text.strip()
+
+    print(tooltip_tag.find('div').text)
+
+
+
+
+    '''
     # Process all expected fields
     for field_name, field_data in PLAYER_FIELDS.items():
-        field = player_row.find('td',{'data-col':field_name})
+        field = player_row.find('td', {'data-col': field_name})
 
         player_dict[field_data['json_key_name']] = field.text
-
-
+    '''
     return player_dict
+
+
+
+
+
+
+
 
 
 def parse_file(file_path):
