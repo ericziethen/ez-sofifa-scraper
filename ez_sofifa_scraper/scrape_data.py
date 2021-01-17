@@ -7,12 +7,6 @@ from bs4 import BeautifulSoup
 
 from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
 
-# PLAYER_FIELDS = {
-#     'pi':{ 'json_key_name': 'id' },
-#     'ae':{ 'json_key_name': 'Age' },
-# }
-
-
 
 def parse_player_row(player_row):
     player_dict = {}
@@ -28,19 +22,33 @@ def parse_player_row(player_row):
     player_dict['detail_url'] = tooltip_tag.get('href')
     player_dict['full_name'] = tooltip_tag.get('data-tooltip')
     player_dict['short_name'] = tooltip_tag.find('div').text.strip()
+    player_dict['nationality'] = tooltip_tag.find('img').get('title')
 
-    print(tooltip_tag.find('div').text)
+    # Player Positions
+    positions = player_row.findAll('span', {'class': re.compile('pos pos*')})
+    player_dict['positions'] = sorted(list({x.text for x in positions}))  # set because finding best position which results in duplicate
 
+    # Team
+    player_dict['team'] = player_row.find('a', {'href': re.compile('/team/*')}).text
 
+    # Contract
+    contract = player_row.find('div', {'class': 'sub'}).text.strip().split(' ~ ')
+    player_dict['contract_from'] = contract[0]
+    player_dict['contract_to'] = contract[1]
 
+    # Attributes
+    for attrib_name, firendly_name in PLAYER_HTML_KEY_LOOKUP.items():
+        attrib_elem = player_row.find('td', {'data-col': attrib_name})
 
-    '''
-    # Process all expected fields
-    for field_name, field_data in PLAYER_FIELDS.items():
-        field = player_row.find('td', {'data-col': field_name})
+        # For some attributes only we need to ignore the nested span
+        ignore_span = ['ir', 'sk', 'wk']
+        if attrib_name not in ignore_span:
+            sub_span_elem = attrib_elem.find('span')
+            if sub_span_elem:
+                attrib_elem = sub_span_elem
+        # Select the text form the current level, not nested
+        player_dict[firendly_name] = attrib_elem.find(text=True, recursive=False).strip()
 
-        player_dict[field_data['json_key_name']] = field.text
-    '''
     return player_dict
 
 

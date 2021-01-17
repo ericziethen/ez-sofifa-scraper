@@ -66,7 +66,7 @@ PLAYER_HTML_KEY_LOOKUP = {
     'vi': 'vision',
     'vl': 'value',
     'vo': 'volleys',
-    'wg': 'wage',
+    'wg': 'wage_weekly',
     'wi': 'weight',
     'wk': 'weak_foot',
 }

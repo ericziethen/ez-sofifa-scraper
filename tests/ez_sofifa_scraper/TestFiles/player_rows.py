@@ -1,4 +1,5 @@
 
+# Test Data, slightly modified, e.g. Given extra positions for testing
 PLAYER_1_ROW_STR = """
 <tr>
     <td class="col-avatar">
@@ -12,8 +13,14 @@ PLAYER_1_ROW_STR = """
                 <img title="Italy" alt="" src="" data-src="https://cdn.sofifa.com/flags/it.png" data-srcset="https://cdn.sofifa.com/flags/it@2x.png 2x, https://cdn.sofifa.com/flags/it@3x.png 3x" class="flag"> G. Buffon
             </div>
         </a>
-        <a rel="nofollow" href="/players?pn=0">
-            <span class="pos pos0">GK</span>
+        <a rel="nofollow" href="/players?pn=12">
+            <span class="pos pos12">GK</span>
+        </a>
+        <a rel="nofollow" href="/players?pn=16">
+            <span class="pos pos16">LM</span>
+        </a>
+        <a rel="nofollow" href="/players?pn=27">
+            <span class="pos pos27">LW</span>
         </a>
     </td>
     <td class="col col-ae" data-col="ae">42</td>
