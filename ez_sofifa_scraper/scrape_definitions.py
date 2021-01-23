@@ -26,7 +26,7 @@ PLAYER_HTML_KEY_LOOKUP = {
     'gr': 'goal_keeper_reflexes',
     'gu': 'growth',
     'he': 'heading_accuracy',
-    'hi': 'height',
+    'hi': 'height_cm',
     'in': 'interceptions',
     'ir': 'international_reputation',
     'jt': 'joined',
@@ -44,7 +44,7 @@ PLAYER_HTML_KEY_LOOKUP = {
     'pi': 'id',
     'po': 'positioning',
     'pt': 'potential',
-    'rc': 'release_clause',
+    'rc': 'release_clause_euros',
     're': 'reactions',
     'sa': 'standing_tackle',
     'sh': 'short_passing',
@@ -64,9 +64,102 @@ PLAYER_HTML_KEY_LOOKUP = {
     'ts': 'total_skill',
     'tt': 'total_stats',
     'vi': 'vision',
-    'vl': 'value',
+    'vl': 'value_euros',
     'vo': 'volleys',
-    'wg': 'wage_weekly',
-    'wi': 'weight',
+    'wg': 'wage_weekly_euros',
+    'wi': 'weight_kg',
     'wk': 'weak_foot',
+}
+
+
+def convert_euros(text):
+    # Remove the Symbol
+    new_val = text.removeprefix('€')
+
+    # Convert Value
+    multi = 1
+    if new_val.endswith('M'):
+        multi = 1000000
+        new_val = new_val.removesuffix('M')
+    elif new_val.endswith('K'):
+        multi = 1000
+        new_val = new_val.removesuffix('K')
+
+    return float(new_val) * multi
+
+
+def convert_cm(text):
+    return int(text.removesuffix('cm'))
+
+
+def convert_kg(text):
+    return float(text.removesuffix('kg'))
+
+
+PLAYER_FIELD_TYPE_CONVERTION = {
+    'acceleration': int,
+    'age': int,
+    'aggression': int,
+    'agility': int,
+    'balance': int,
+    'ball_control': int,
+    'base_stats': int,
+    'best_overall': int,
+    'composure': int,
+    'contract_from': int,
+    'contract_to': int,
+    'crossing': int,
+    'curve': int,
+    'defence': int,
+    'dri': int,
+    'dribbling': int,
+    'finishing': int,
+    'free_kick_accuracy': int,
+    'goal_keeper_diving': int,
+    'goal_keeper_handling': int,
+    'goal_keeper_kicking': int,
+    'goal_keeper_positioning': int,
+    'goal_keeper_reflexes': int,
+    'growth': int,
+    'heading_accuracy': int,
+    'height_cm': convert_cm,
+    'id': int,
+    'interceptions': int,
+    'international_reputation': int,
+    'jumping': int,
+    'long_passing': int,
+    'long_shots': int,
+    'marking': int,
+    'overall_rating': int,
+    'pace': int,
+    'passing': int,
+    'penalties': int,
+    'physical': int,
+    'positioning': int,
+    'potential': int,
+    'reactions': int,
+    'release_clause_euros': convert_euros,
+    'shooting': int,
+    'short_passing': int,
+    'shot_power': int,
+    'skill_moves': int,
+    'sliding_tackle': int,
+    'sprint_speed': int,
+    'stamina': int,
+    'standing_tackle': int,
+    'strength': int,
+    'total_attacking': int,
+    'total_defending': int,
+    'total_goalkeeping': int,
+    'total_mentality': int,
+    'total_movement': int,
+    'total_power': int,
+    'total_skill': int,
+    'total_stats': int,
+    'value_euros': convert_euros,
+    'vision': int,
+    'volleys': int,
+    'wage_weekly_euros': convert_euros,
+    'weak_foot': int,
+    'weight_kg': convert_kg,
 }

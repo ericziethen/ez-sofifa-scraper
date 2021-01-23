@@ -5,7 +5,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
+from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP, PLAYER_FIELD_TYPE_CONVERTION
 
 
 def parse_player_row(player_row):
@@ -48,6 +48,11 @@ def parse_player_row(player_row):
                 attrib_elem = sub_span_elem
         # Select the text form the current level, not nested
         player_dict[firendly_name] = attrib_elem.find(text=True, recursive=False).strip()
+
+    # Convert Types
+    for convert_name, convert_func in PLAYER_FIELD_TYPE_CONVERTION.items():
+        if convert_name in player_dict:
+            player_dict[convert_name] = PLAYER_FIELD_TYPE_CONVERTION[convert_name](player_dict[convert_name])
 
     return player_dict
 
