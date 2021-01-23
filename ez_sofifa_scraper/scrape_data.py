@@ -2,7 +2,7 @@
 import os
 import re
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 
 from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP, PLAYER_FIELD_TYPE_CONVERTION
 
@@ -60,7 +60,7 @@ def parse_player_row(player_row):
     # Convert Types
     for convert_name, convert_func in PLAYER_FIELD_TYPE_CONVERTION.items():
         if convert_name in player_dict:
-            player_dict[convert_name] = PLAYER_FIELD_TYPE_CONVERTION[convert_name](player_dict[convert_name])
+            player_dict[convert_name] = convert_func(player_dict[convert_name])
 
     return player_dict
 
@@ -68,9 +68,11 @@ def parse_player_row(player_row):
 def parse_player_file(file_path):
     players_dict = {}
 
-    with open(file_path, 'r', encoding='utf-8') as file_ptr:
+    with open(file_path, 'rb') as file_ptr:  # By opening in bytes beautifoul soup avoids unicode errors
         contents = file_ptr.read()
-        soup = BeautifulSoup(contents, "html.parser")
+
+        table = SoupStrainer('tbody', 'list')
+        soup = BeautifulSoup(contents, "html.parser", from_encoding="utf-8", parse_only=table)
 
         players = soup.select('tbody tr')
         for player in players:
@@ -80,10 +82,14 @@ def parse_player_file(file_path):
 
     return players_dict
 
+
 def parse_player_files_from_dir(base_dir):
     players_dict = {}
 
     for file_name in os.listdir(base_dir):
-        players_dict = players_dict | parse_player_file(os.path.join(base_dir, file_name))
+        if file_name.lower().endswith('.html'):
+            file_path = os.path.join(base_dir, file_name)
+            print('Parsing file', file_path)
+            players_dict |= parse_player_file(file_path)
 
     return players_dict

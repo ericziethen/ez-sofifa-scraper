@@ -123,7 +123,6 @@ PLAYER_FIELD_TYPE_CONVERTION = {
     'growth': int,
     'heading_accuracy': int,
     'height_cm': convert_cm,
-    'id': int,
     'interceptions': int,
     'international_reputation': int,
     'jumping': int,
