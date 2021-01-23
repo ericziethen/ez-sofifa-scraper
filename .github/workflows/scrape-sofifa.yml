@@ -1,112 +1,138 @@
-# name: SCRAPE_SOFIFA
+name: SCRAPE_SOFIFA
 
-# on:
-#   push:
-#     tags:
-#     - '[0-9]+.[0-9]+.[0-9]+'
-#     branches:
-#     - master
-#     - main
-#     - feature/setup-basic-workflow
+on:
+  push:
+    tags:
+    - '[0-9]+.[0-9]+.[0-9]+'
+    branches:
+    - master
+    - main
+    - feature/setup-basic-workflow
 
-# jobs:
-#   scrape:
-#     name: Scrape Sofifa Data
-#     runs-on: "ubuntu-latest"
+jobs:
+  scrape:
+    name: Scrape Sofifa Data
+    runs-on: "ubuntu-latest"
 
-#     steps:
-#       - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Get current date
-#         id: date
-#         run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H-%M-%S')"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H-%M-%S')"
 
-#       - name: Setup Environment
-#         # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
-#         run: |
-#           echo "WORK_DIR=${{ github.workspace }}" >> $GITHUB_ENV
-#           echo "DATA_DIR=${{ github.workspace }}/data" >> $GITHUB_ENV
-#           echo "HTML_DIR=${{ github.workspace }}/data/html" >> $GITHUB_ENV
-#           echo "PLAYERS_DIR=${{ github.workspace }}/data/html/Players" >> $GITHUB_ENV
-#           echo "TEAMS_DIR=${{ github.workspace }}/data/html/Teams" >> $GITHUB_ENV
-#           echo "LEAGUES_DIR=${{ github.workspace }}/data/html/Leagues" >> $GITHUB_ENV
-#           echo "SQUADS_DIR=${{ github.workspace }}/data/html/Squads" >> $GITHUB_ENV
+      - name: Setup Environment
+        # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
+        run: |
+          echo "WORK_DIR=${{ github.workspace }}" >> $GITHUB_ENV
+          echo "DATA_DIR=${{ github.workspace }}/data" >> $GITHUB_ENV
+          echo "HTML_DIR=${{ github.workspace }}/data/html" >> $GITHUB_ENV
+          echo "JSON_DIR=${{ github.workspace }}/data/json" >> $GITHUB_ENV
+          echo "PLAYERS_DIR=${{ github.workspace }}/data/html/Players" >> $GITHUB_ENV
+          echo "TEAMS_DIR=${{ github.workspace }}/data/html/Teams" >> $GITHUB_ENV
+          echo "LEAGUES_DIR=${{ github.workspace }}/data/html/Leagues" >> $GITHUB_ENV
+          echo "SQUADS_DIR=${{ github.workspace }}/data/html/Squads" >> $GITHUB_ENV
           
 
-#       - name: Setup Dirs
-#         run: |
-#           echo "DATA_DIR: '${DATA_DIR}'"
-#           echo "HTML_DIR: '${HTML_DIR}'"
-#           echo "PLAYERS_DIR: '${PLAYERS_DIR}'"
-#           echo "TEAMS_DIR: '${TEAMS_DIR}'"
-#           echo "LEAGUES_DIR: '${LEAGUES_DIR}'"
-#           echo "LEAGUES_DIR: '${SQUADS_DIR}'"
+      - name: Setup Dirs
+        run: |
+          echo "DATA_DIR: '${DATA_DIR}'"
+          echo "HTML_DIR: '${HTML_DIR}'"
+          echo "JSON_DIR: '${JSON_DIR}'"
+          echo "PLAYERS_DIR: '${PLAYERS_DIR}'"
+          echo "TEAMS_DIR: '${TEAMS_DIR}'"
+          echo "LEAGUES_DIR: '${LEAGUES_DIR}'"
+          echo "LEAGUES_DIR: '${SQUADS_DIR}'"
 
-#           echo "Command: 'mkdir -p ${DATA_DIR}'"
-#           mkdir -p ${DATA_DIR}
-#           echo "Command: 'mkdir -p ${HTML_DIR}'"
-#           mkdir -p ${HTML_DIR}
-#           echo "Command: 'mkdir -p ${PLAYERS_DIR}'"
-#           mkdir -p ${PLAYERS_DIR}
-#           echo "Command: 'mkdir -p ${TEAMS_DIR}'"
-#           mkdir -p ${TEAMS_DIR}
-#           echo "Command: 'mkdir -p ${LEAGUES_DIR}'"
-#           mkdir -p ${LEAGUES_DIR}
-#           echo "Command: 'mkdir -p ${SQUADS_DIR}'"
-#           mkdir -p ${SQUADS_DIR}
+          echo "Command: 'mkdir -p ${DATA_DIR}'"
+          mkdir -p ${DATA_DIR}
+          echo "Command: 'mkdir -p ${HTML_DIR}'"
+          mkdir -p ${HTML_DIR}
+          echo "Command: 'mkdir -p ${JSON_DIR}'"
+          mkdir -p ${JSON_DIR}
+          echo "Command: 'mkdir -p ${PLAYERS_DIR}'"
+          mkdir -p ${PLAYERS_DIR}
+          echo "Command: 'mkdir -p ${TEAMS_DIR}'"
+          mkdir -p ${TEAMS_DIR}
+          echo "Command: 'mkdir -p ${LEAGUES_DIR}'"
+          mkdir -p ${LEAGUES_DIR}
+          echo "Command: 'mkdir -p ${SQUADS_DIR}'"
+          mkdir -p ${SQUADS_DIR}
 
-#           echo "Command: 'ls -altR ${DATA_DIR}'"
-#           ls -altR ${DATA_DIR}
+          echo "Command: 'ls -altR ${DATA_DIR}'"
+          ls -altR ${DATA_DIR}
 
-#       - name: Get Robots.txt
-#         run: |
-#           echo "Command: './scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"'"
-#           ./scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"
+      - name: Get Robots.txt
+        run: |
+          echo "Command: './scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"'"
+          ./scripts/handle_sofifa_robots_txt.sh "${HTML_DIR}"
 
-#       - name: Scrape Teams, Leagues and Squads
-#         run: |
-#           echo "Command: './scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"'"
-#           ./scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"
+      - name: Scrape Teams, Leagues and Squads
+        run: |
+          echo "Command: './scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"'"
+          ./scripts/scrape_sofifa_teams.sh "${TEAMS_DIR}"
 
-#       - name: Scrape Players
-#         run: |
-#           echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"
-#           ./scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"
+      - name: Scrape Players
+        run: |
+          echo "Command: './scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"'"
+          ./scripts/scrape_sofifa_players.sh "${PLAYERS_DIR}"
 
-#       - name: Scrape Leagues
-#         run: |
-#           echo "Command: './scripts/scrape_sofifa_leagues.sh "${TEAMS_DIR}" "${LEAGUES_DIR}"'"
-#           ./scripts/scrape_sofifa_leagues.sh "${TEAMS_DIR}" "${LEAGUES_DIR}"
+      - name: Scrape Leagues
+        run: |
+          echo "Command: './scripts/scrape_sofifa_leagues.sh "${TEAMS_DIR}" "${LEAGUES_DIR}"'"
+          ./scripts/scrape_sofifa_leagues.sh "${TEAMS_DIR}" "${LEAGUES_DIR}"
 
-#       - name: Scrape Squads
-#         run: |
-#           echo "Command: './scripts/scrape_sofifa_squads.sh "${TEAMS_DIR}" "${SQUADS_DIR}"'"
-#           ./scripts/scrape_sofifa_squads.sh "${TEAMS_DIR}" "${SQUADS_DIR}"
+      - name: Scrape Squads
+        run: |
+          echo "Command: './scripts/scrape_sofifa_squads.sh "${TEAMS_DIR}" "${SQUADS_DIR}"'"
+          ./scripts/scrape_sofifa_squads.sh "${TEAMS_DIR}" "${SQUADS_DIR}"
 
-#       - name: Zip artifact
-#         run: |
-#           pushd "${DATA_DIR}"
-#           zip -r ${WORK_DIR}/sofifa_data.zip .
-#           popd
+      - name: Zip html artifacts
+        run: |
+          pushd "${DATA_DIR}"
+          zip -r ${WORK_DIR}/sofifa_html_data.zip html
+          popd
 
-#       - name: Create Release
-#         id: create_release
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           tag_name: ${{ steps.date.outputs.date }}
-#           release_name: Release ${{ steps.date.outputs.date }}
-#           draft: false
-#           prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: Release ${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
 
-#       - name: Upload Release Asset
-#         id: upload-release-asset
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create_release.outputs.upload_url }}
-#           asset_path: ./sofifa_data.zip
-#           asset_name: sofifa_data.zip
-#           asset_content_type: application/zip
+      - name: Upload HTML Artifacts
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./sofifa_html_data.zip
+          asset_name: sofifa_html_data.zip
+          asset_content_type: application/zip
+
+      - name: Convert HTML to JSON
+        run: |
+          echo "python ./scripts/parse_players_from_html.py --html_dir "${HTML_DIR}" --json_file "${JSON_DIR}/players.json""
+          python ./scripts/parse_players_from_html.py --html_dir "${HTML_DIR}" --json_file "${JSON_DIR}/players.json"
+
+      - name: Zip json artifacts
+        run: |
+          pushd "${DATA_DIR}"
+          zip -r ${WORK_DIR}/sofifa_json_data.zip json
+          popd
+
+      - name: Upload JSON Artifacts
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./sofifa_json_data.zip
+          asset_name: sofifa_json_data.zip
+          asset_content_type: application/zip
