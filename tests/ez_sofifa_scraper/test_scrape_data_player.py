@@ -3,10 +3,12 @@ import pytest
 
 from bs4 import BeautifulSoup
 
-from ez_sofifa_scraper.scrape_data import parse_player_row
+from ez_sofifa_scraper.scrape_data import parse_player_row, parse_player_file, parse_player_files_from_dir
 from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
-from tests.ez_sofifa_scraper.TestFiles.player_rows import PLAYER_1_ROW_STR
+from tests.ez_sofifa_scraper.TestFiles.player_rows import PLAYER_1_ROW_STR, PLAYER_1_ROW_STR_ALTERNATIVE_FIELDS
 
+HTML_TEST_FILE = 'tests/ez_sofifa_scraper/TestFiles/html/PLAYERS_offset_0.html'
+HTML_TEST_DIR = 'tests/ez_sofifa_scraper/TestFiles/html'
 
 HTML_KEY_TRANSLATION = [
     ('ac', 'acceleration'),
@@ -142,7 +144,7 @@ PLAYER_1_ROW_DETAILS = [
     ('id', 1179),
     ('positioning', 12),
     ('potential', 82),
-    ('release_clause_euros', 5600000),  # '€5.6M'
+    ('release_clause_euros', 5600000.0),    # '€5.6M'
     ('reactions', 80),
     ('standing_tackle', 11),
     ('short_passing', 37),
@@ -177,23 +179,32 @@ def test_read_player_row(key, value):
     assert player_dict[key] == value
 
 
-'''
+def test_player_no_contract_duration():
+    player_dict = parse_player_row(BeautifulSoup(PLAYER_1_ROW_STR_ALTERNATIVE_FIELDS, "html.parser"))
+
+    assert player_dict['contract_from'] == 0
+    assert player_dict['contract_to'] == 0
 
 
-PLAY_DIC_CONVERTION = [
-    ('', '', '')
-]
-def test_convert_player_data(key, value, expected_value):
-    # TODO, convert to field convertion, e.g. type, name convertion...
-    assert False
+def test_player_no_team():
+    player_dict = parse_player_row(BeautifulSoup(PLAYER_1_ROW_STR_ALTERNATIVE_FIELDS, "html.parser"))
+
+    assert player_dict['team'] == ''
 
 
 def test_read_html_file():
-    # TODO - Test all fields are found for each player, just the key
-    assert False
+    players_dic = parse_player_file(HTML_TEST_FILE)
+
+    assert len(players_dic) == 60
+    for player_dic in players_dic.values():
+        for entry in PLAYER_1_ROW_DETAILS:
+            assert entry[0] in player_dic
 
 
-def test_read_multiple_html_files():
-    # TODO - Test the right number of players are found, with each field found
-    assert False
-'''
+def test_read_html_files_from_dir():
+    players_dic = parse_player_files_from_dir(HTML_TEST_DIR)
+
+    assert len(players_dic) == 120
+    for player_dic in players_dic.values():
+        for entry in PLAYER_1_ROW_DETAILS:
+            assert entry[0] in player_dic

@@ -1,6 +1,5 @@
 
-### !!! POC !!! ###
-
+import os
 import re
 
 from bs4 import BeautifulSoup
@@ -29,12 +28,21 @@ def parse_player_row(player_row):
     player_dict['positions'] = sorted(list({x.text for x in positions}))  # set because finding best position which results in duplicate
 
     # Team
-    player_dict['team'] = player_row.find('a', {'href': re.compile('/team/*')}).text
+    team_text = player_row.find('a', {'href': re.compile('/team/*')})
+    if team_text:
+        player_dict['team'] = team_text.text
+    else:
+        player_dict['team'] = ''
 
     # Contract
-    contract = player_row.find('div', {'class': 'sub'}).text.strip().split(' ~ ')
-    player_dict['contract_from'] = contract[0]
-    player_dict['contract_to'] = contract[1]
+    contract_text = player_row.find('div', {'class': 'sub'}).text.strip()
+    if ' ~ ' in contract_text:
+        contract = contract_text.split(' ~ ')
+        player_dict['contract_from'] = contract[0]
+        player_dict['contract_to'] = contract[1]
+    else:
+        player_dict['contract_from'] = 0
+        player_dict['contract_to'] = 0
 
     # Attributes
     for attrib_name, firendly_name in PLAYER_HTML_KEY_LOOKUP.items():
@@ -57,38 +65,25 @@ def parse_player_row(player_row):
     return player_dict
 
 
-
-
-
-
-
-
-
-def parse_file(file_path):
+def parse_player_file(file_path):
     players_dict = {}
 
     with open(file_path, 'r', encoding='utf-8') as file_ptr:
         contents = file_ptr.read()
         soup = BeautifulSoup(contents, "html.parser")
 
-        #players = soup.findAll('a', {'href': re.compile('/player/*')})
         players = soup.select('tbody tr')
-        print('PLAYERS FOUND:', len(players))
         for player in players:
             player_dict = parse_player_row(player)
             if player_dict and player_dict['id'] not in players_dict:  # Ensure no duplicates
                 players_dict[player_dict['id']] = player_dict
 
-            tooltip = player.find("a",{"class":"tooltip"})
-            #print(tooltip.get('data-tooltip'), ',', tooltip.text)
+    return players_dict
 
-    print(players_dict)
-    print('Total Players Parsed:', len(players_dict))
+def parse_player_files_from_dir(base_dir):
+    players_dict = {}
 
+    for file_name in os.listdir(base_dir):
+        players_dict = players_dict | parse_player_file(os.path.join(base_dir, file_name))
 
-def main():
-    file_path = R'D:\temp\sofifaTest\test3\sofifa_data\html\Players\PLAYERS_offset_0.html'
-    parse_file(file_path)
-
-if __name__ == '__main__':
-    main()
+    return players_dict
