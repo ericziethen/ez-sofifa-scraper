@@ -28,5 +28,6 @@ def main():
     with open(args.json_file, 'w') as file_ptr:
         json.dump(player_dict, file_ptr, indent=4, sort_keys=True)
 
+
 if __name__ == '__main__':
     main()
