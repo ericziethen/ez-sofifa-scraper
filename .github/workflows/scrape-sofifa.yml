@@ -117,8 +117,8 @@ jobs:
 
       - name: Convert HTML to JSON
         run: |
-          echo "python ./scripts/parse_players_from_html.py --html_dir "${HTML_DIR}" --json_file "${JSON_DIR}/players.json""
-          python ./scripts/parse_players_from_html.py --html_dir "${HTML_DIR}" --json_file "${JSON_DIR}/players.json"
+          echo 'python ./scripts/parse_players_from_html.py --html_dir "${PLAYERS_DIR}" --json_file "${JSON_DIR}/players.json"'
+          python ./scripts/parse_players_from_html.py --html_dir "${PLAYERS_DIR}" --json_file "${JSON_DIR}/players.json"
 
       - name: Zip json artifacts
         run: |

@@ -17,7 +17,9 @@ def main():
     parser.add_argument('-jf', '--json_file', help='The file to store the players in.', required=True)
     args = parser.parse_args()
 
-    if (not os.path.exists(args.html_dir)) or not os.path.isdir(args.html_dir):
+    print('ARGS:', args)
+
+    if (not os.path.exists(args.html_dir)) or (not os.path.isdir(args.html_dir)):
         raise ValueError(F'"{args.html_dir}" is not a vaid directory')
 
     os.makedirs(os.path.dirname(args.json_file), exist_ok=True)
