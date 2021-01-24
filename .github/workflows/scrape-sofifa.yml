@@ -26,6 +26,15 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Setup Python Packages
+        run: |
+          pip --version
+          python --version --version
+          pip list
+          python -m pip install --upgrade pip pipenv
+          pip install -r requirements.txt
+          pip list
+
       - name: Setup Environment
         # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
         run: |
