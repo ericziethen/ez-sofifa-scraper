@@ -1,14 +1,19 @@
 
+import json
+import os
+
 import pytest
 
 from bs4 import BeautifulSoup
 
-from ez_sofifa_scraper.scrape_data import parse_player_row, parse_player_file, parse_player_files_from_dir
+from ez_sofifa_scraper.scrape_data import parse_player_row, parse_player_file, parse_player_files_from_dir, write_players_dict_to_json
 from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
 from tests.ez_sofifa_scraper.TestFiles.player_rows import PLAYER_1_ROW_STR, PLAYER_1_ROW_STR_ALTERNATIVE_FIELDS
 
+
+HTML_TEST_FILE_SINGLE_PLAYER = 'tests/ez_sofifa_scraper/TestFiles/html/PLAYERS_single.html'
 HTML_TEST_FILE = 'tests/ez_sofifa_scraper/TestFiles/html/PLAYERS_offset_420.html'
-HTML_TEST_DIR = 'tests/ez_sofifa_scraper/TestFiles/html'
+HTML_TEST_DIR = 'tests/ez_sofifa_scraper/TestFiles/html/process_dir'
 
 HTML_KEY_TRANSLATION = [
     ('ac', 'acceleration'),
@@ -170,7 +175,6 @@ PLAYER_1_ROW_DETAILS = [
     ('weight_kg', 92.0),                # '92kg'
     ('weak_foot', 2),
 ]
-
 @pytest.mark.parametrize('key, value', PLAYER_1_ROW_DETAILS)
 def test_read_player_row(key, value):
     player_dict = parse_player_row(BeautifulSoup(PLAYER_1_ROW_STR, "html.parser"))
@@ -204,7 +208,37 @@ def test_read_html_file():
 def test_read_html_files_from_dir():
     players_dic = parse_player_files_from_dir(HTML_TEST_DIR)
 
-    assert len(players_dic) == 60 * 4
+    assert len(players_dic) == 60 * 2
     for player_dic in players_dic.values():
         for entry in PLAYER_1_ROW_DETAILS:
             assert entry[0] in player_dic
+
+
+def test_write_player_to_json(tmpdir):
+    player_json = os.path.join(tmpdir, 'player.json')
+    print(player_json)
+
+    players_dicts = parse_player_file(HTML_TEST_FILE_SINGLE_PLAYER)
+
+    assert len(players_dicts) == 1
+    assert '41' in players_dicts
+
+    html_dict = players_dicts['41']
+    assert html_dict['team'] == 'Vissel Köbe'
+
+    write_players_dict_to_json(players_dicts, player_json)
+
+    # Check Json File
+    json_dict = {}
+    with open(player_json, 'r', encoding='utf-8') as file_ptr:
+        json_dict = json.load(file_ptr)
+
+    assert len(json_dict) == 1
+    assert '41' in json_dict
+
+    json_player = json_dict['41']
+    assert json_player['team'] == 'Vissel Köbe'
+
+    for key, value in html_dict.items():
+        assert key in json_player
+        assert value == json_player[key]

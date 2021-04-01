@@ -25,8 +25,7 @@ def main():
     os.makedirs(os.path.dirname(args.json_file), exist_ok=True)
     player_dict = scrape_data.parse_player_files_from_dir(args.html_dir)
 
-    with open(args.json_file, 'w') as file_ptr:
-        json.dump(player_dict, file_ptr, indent=4, sort_keys=True)
+    scrape_data.write_players_dict_to_json(player_dict, args.json_file)
 
 
 if __name__ == '__main__':
