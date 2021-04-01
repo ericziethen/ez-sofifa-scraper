@@ -1,13 +1,15 @@
 name: SCRAPE_SOFIFA
 
-on:
-  push:
-    tags:
-    - '[0-9]+.[0-9]+.[0-9]+'
-    branches:
-    - master
-    - main
-    - feature/setup-basic-workflow
+on: 
+  workflow_dispatch:
+    # Text Field Inputs - Maybe use in the future for Start Date ...
+    #  access by ${{ github.event.inputs.version }}
+
+    # inputs:
+    #   version:
+    #     description: Bump Version
+    #     default: v1.0.0
+    #     required: true
 
 jobs:
   scrape:
