@@ -95,7 +95,7 @@ PLAYER_1_ROW_DETAILS = [
     ('short_name', 'G. Buffon'),
     ('nationality', 'Italy'),
     ('positions', ['GK', 'LM', 'LW']),
-    ('team', 'Juventus'),
+    ('team', 'Juventus Törin'),
     ('contract_from', 2019),
     ('contract_to', 2021),
 

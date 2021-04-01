@@ -35,7 +35,7 @@ PLAYER_1_ROW_STR = """
             <figure class="avatar avatar-sm transparent">
                 <img alt="" class="team" data-src="https://cdn.sofifa.com/teams/45/30.png" data-srcset="https://cdn.sofifa.com/teams/45/60.png 2x, https://cdn.sofifa.com/teams/45/90.png 3x" src="https://cdn.sofifa.com/teams/notfound_30.png" data-root="https://cdn.sofifa.com/teams/" data-type="team">
             </figure>
-            <a href="/team/45/juventus/">Juventus</a>
+            <a href="/team/45/juventus/">Juventus Törin</a>
             <div class="sub">
 2019 ~ 2021</div>
         </div>
