@@ -1,13 +1,12 @@
 """Script to convert m3u4u channel files to a fake m3u playlist."""
 
 import argparse
-import json
 import os
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from ez_sofifa_scraper import scrape_data
+import ez_sofifa_scraper
 
 
 def main():
@@ -23,9 +22,9 @@ def main():
         raise ValueError(F'"{args.html_dir}" is not a vaid directory')
 
     os.makedirs(os.path.dirname(args.json_file), exist_ok=True)
-    player_dict = scrape_data.parse_player_files_from_dir(args.html_dir)
+    player_dict = ez_sofifa_scraper.parse_player_data.parse_player_files_from_dir(args.html_dir)
 
-    scrape_data.write_players_dict_to_json(player_dict, args.json_file)
+    ez_sofifa_scraper.utils.write_data_dict_to_json(player_dict, args.json_file)
 
 
 if __name__ == '__main__':

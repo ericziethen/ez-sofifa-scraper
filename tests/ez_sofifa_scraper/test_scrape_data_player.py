@@ -6,7 +6,8 @@ import pytest
 
 from bs4 import BeautifulSoup
 
-from ez_sofifa_scraper.scrape_data import parse_player_row, parse_player_file, parse_player_files_from_dir, write_players_dict_to_json
+from ez_sofifa_scraper.parse_player_data import parse_player_row, parse_player_file, parse_player_files_from_dir
+from ez_sofifa_scraper.utils import write_data_dict_to_json
 from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
 from tests.ez_sofifa_scraper.TestFiles.player_rows import PLAYER_1_ROW_STR, PLAYER_1_ROW_STR_ALTERNATIVE_FIELDS
 
@@ -226,7 +227,7 @@ def test_write_player_to_json(tmpdir):
     html_dict = players_dicts['41']
     assert html_dict['team'] == 'Vissel Köbe'
 
-    write_players_dict_to_json(players_dicts, player_json)
+    write_data_dict_to_json(players_dicts, player_json)
 
     # Check Json File
     json_dict = {}

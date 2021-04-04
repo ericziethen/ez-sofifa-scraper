@@ -1,5 +1,4 @@
 
-import json
 import os
 import re
 
@@ -94,8 +93,3 @@ def parse_player_files_from_dir(base_dir):
             players_dict |= parse_player_file(file_path)
 
     return players_dict
-
-
-def write_players_dict_to_json(player_dict, json_path):
-    with open(json_path, 'w', encoding='utf-8') as file_ptr:
-        json.dump(player_dict, file_ptr, indent=4, sort_keys=True, ensure_ascii=False)

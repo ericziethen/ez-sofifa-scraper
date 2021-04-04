@@ -1,4 +1,7 @@
 
+from ez_sofifa_scraper.utils import convert_cm, convert_euros, convert_kg
+
+
 PLAYER_HTML_KEY_LOOKUP = {
     'ac': 'acceleration',
     'ae': 'age',
@@ -70,30 +73,6 @@ PLAYER_HTML_KEY_LOOKUP = {
     'wi': 'weight_kg',
     'wk': 'weak_foot',
 }
-
-
-def convert_euros(text):
-    # Remove the Symbol
-    new_val = text.removeprefix('€')
-
-    # Convert Value
-    multi = 1
-    if new_val.endswith('M'):
-        multi = 1000000
-        new_val = new_val.removesuffix('M')
-    elif new_val.endswith('K'):
-        multi = 1000
-        new_val = new_val.removesuffix('K')
-
-    return float(new_val) * multi
-
-
-def convert_cm(text):
-    return int(text.removesuffix('cm'))
-
-
-def convert_kg(text):
-    return float(text.removesuffix('kg'))
 
 
 PLAYER_FIELD_TYPE_CONVERTION = {
