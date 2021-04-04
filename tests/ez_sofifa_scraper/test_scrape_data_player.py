@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 from ez_sofifa_scraper.parse_player_data import parse_player_row, parse_player_file, parse_player_files_from_dir
 from ez_sofifa_scraper.utils import write_data_dict_to_json
-from ez_sofifa_scraper.scrape_definitions import PLAYER_HTML_KEY_LOOKUP
+from ez_sofifa_scraper.parse_player_data import PLAYER_HTML_KEY_LOOKUP
 from tests.ez_sofifa_scraper.TestFiles.player_rows import PLAYER_1_ROW_STR, PLAYER_1_ROW_STR_ALTERNATIVE_FIELDS
 
 
